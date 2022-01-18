@@ -1,29 +1,68 @@
 <!DOCTYPE html>
 <html>
+
 <body>
 
     <script>
-        function createSquare() {
-            var canvas = document.getElementById("myCanvas")
+        const squareSize = 200;
+        var colors = [];
 
-canvas.width = 200;
-canvas.height = 200;
-var ctx = canvas.getContext("2d");
-ctx.fillStyle = document.getElementById("color").value
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+        function addColor(index) {
+            console.log(colors);
+            // TODO map to input index
+            var color = document.getElementById("color" + index).value;
+            if (index >= colors.length) {
+                colors.push(color);
+                createColorForm();
+            } else {
+                colors[index] = color;
+            }
         }
+
+        function updatePalette() {
+            var canvas = document.getElementById("myCanvas");
+            canvas.width = squareSize * colors.length;
+            canvas.height = squareSize * colors.length;
+            var ctx = canvas.getContext("2d");
+            for (var i = 0; i < colors.length; i++) {
+                ctx.fillStyle = colors[i];
+                ctx.fillRect(i * squareSize, 0, squareSize, squareSize);
+            }
+        }
+
+        function createColorForm() {
+            const div = document.getElementById("color-input");
+            const form = document.createElement("div");
+            const input = document.createElement("input");
+            input.type = "text";
+            input.id = "color" + colors.length;
+            const button = document.createElement("button");
+            button.addEventListener("click", function() {
+                addColor(colors.length);
+            })
+            button.innerText = "Add Color";
+            form.appendChild(input);
+            form.appendChild(button);
+            div.appendChild(form);
+        }
+
     </script>
 
 
-<h1>Dumb Palette</h1>
-<form>
-    <label for="fname">Hex Value</label><br>
-    <input type="text" id="color" name="Hex"><br>
-  </form> 
-  <button  onclick="createSquare()" type="button">Generate</button> 
+    <h1>Dumb Palette</h1>
+    <div id="color-input">
+        <div>
+            <input type="text" id="color0" name="Hex">
+            <button onclick="addColor(0)" type="button">Add Color</button>
+        </div>
+    </div>
 
-  <canvas id="myCanvas">Your browser does not support the canvas tag.</canvas>
+
+    <button onclick="updatePalette()" type="button">Generate</button>
+    <br />
+    <canvas id="myCanvas">Your browser does not support the canvas tag.</canvas>
+    <br />
 
 </body>
-</html> 
+
+</html>
