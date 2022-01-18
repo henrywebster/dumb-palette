@@ -9,10 +9,12 @@
         var colors = [];
 
         function addColor(index) {
-            console.log(colors);
-            // TODO map to input index
             var color = document.getElementById("color" + index).value;
             if (index >= colors.length && colors.length + 1 < MAX) {
+                // update current button to be removal
+                var button = document.getElementById("button" + index);
+                button.innerText = "Remove color";
+
                 colors.push(color);
                 createColorForm();
             } else {
@@ -22,15 +24,34 @@
             updatePalette();
         }
 
+        function createDownloadUrl() {
+
+            var link = document.getElementById("download-link");
+            if (link === null) {
+                link = document.createElement("a");
+                link.download = 'palette.png';
+                link.textContent = 'Download PNG';
+                link.id = "download-link";
+                var div = document.getElementById("download-container");
+                div.appendChild(link);
+            }
+
+            var canvas = document.getElementById("myCanvas");
+            var url = canvas.toDataURL();
+            link.href = url;
+        }
+
         function updatePalette() {
             var canvas = document.getElementById("myCanvas");
             canvas.width = squareSize * colors.length;
-            canvas.height = squareSize * colors.length;
+            canvas.height = squareSize;
             var ctx = canvas.getContext("2d");
             for (var i = 0; i < colors.length; i++) {
                 ctx.fillStyle = colors[i];
                 ctx.fillRect(i * squareSize, 0, squareSize, squareSize);
             }
+
+            createDownloadUrl();
         }
 
         function createColorForm() {
@@ -40,31 +61,42 @@
             input.type = "text";
             input.id = "color" + colors.length;
             const button = document.createElement("button");
-            button.addEventListener("click", function() {
+            button.addEventListener("click", function () {
                 addColor(colors.length);
             })
-            button.innerText = "Add Color";
+            button.id = "button" + colors.length;
+            button.innerText = "\u2795";
+
+            const upButton = document.createElement("button");
+            upButton.innerText = "\u25B2";
+
+            const downButton = document.createElement("button");
+            downButton.innerText = "\u25BC";
+
             form.appendChild(input);
             form.appendChild(button);
+            form.appendChild(upButton);
+            form.appendChild(downButton);
             div.appendChild(form);
         }
 
     </script>
 
 
-    <h1>Dumb Palette</h1>
+    <h1>&#8902; Dumb Palette &#9650;</h1>
     <div id="color-input">
         <div>
             <input type="text" id="color0" name="Hex">
-            <button onclick="addColor(0)" type="button">Add Color</button>
+            <button onclick="addColor(0)" type="button" id="button0">
+                &#10133;</button>
         </div>
     </div>
 
-
-    <!-- <button onclick="updatePalette()" type="button">Generate</button> -->
     <br />
     <canvas id="myCanvas">Your browser does not support the canvas tag.</canvas>
     <br />
+
+    <div id="download-container"></div>
 
 </body>
 
