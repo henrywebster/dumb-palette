@@ -5,18 +5,21 @@
 
     <script>
         const squareSize = 200;
+        const MAX = 4;
         var colors = [];
 
         function addColor(index) {
             console.log(colors);
             // TODO map to input index
             var color = document.getElementById("color" + index).value;
-            if (index >= colors.length) {
+            if (index >= colors.length && colors.length + 1 < MAX) {
                 colors.push(color);
                 createColorForm();
             } else {
                 colors[index] = color;
             }
+
+            updatePalette();
         }
 
         function updatePalette() {
@@ -58,7 +61,7 @@
     </div>
 
 
-    <button onclick="updatePalette()" type="button">Generate</button>
+    <!-- <button onclick="updatePalette()" type="button">Generate</button> -->
     <br />
     <canvas id="myCanvas">Your browser does not support the canvas tag.</canvas>
     <br />
