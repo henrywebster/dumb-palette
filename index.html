@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+    <script>
+var canvas = document.createElement("canvas");
+
+canvas.width = 200;
+canvas.height = 200;
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "blue";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+var url = canvas.toDataURL();
+
+var a = document.createElement('a');
+a.download = 'my.png';
+a.href = url;
+a.textContent = 'Download PNG';
+
+
+
+document.body.appendChild(a);
+    </script>
+
+<h1>My First Heading</h1>
+<p>My first paragraph.</p>
+
+
+
+</body>
+</html> 
