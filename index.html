@@ -3,30 +3,27 @@
 <body>
 
     <script>
-var canvas = document.createElement("canvas");
+        function createSquare() {
+            var canvas = document.getElementById("myCanvas")
 
 canvas.width = 200;
 canvas.height = 200;
 var ctx = canvas.getContext("2d");
-ctx.fillStyle = "blue";
+ctx.fillStyle = document.getElementById("color").value
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-var url = canvas.toDataURL();
-
-var a = document.createElement('a');
-a.download = 'my.png';
-a.href = url;
-a.textContent = 'Download PNG';
-
-
-
-document.body.appendChild(a);
+        }
     </script>
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
 
+<h1>Dumb Palette</h1>
+<form>
+    <label for="fname">Hex Value</label><br>
+    <input type="text" id="color" name="Hex"><br>
+  </form> 
+  <button  onclick="createSquare()" type="button">Generate</button> 
 
+  <canvas id="myCanvas">Your browser does not support the canvas tag.</canvas>
 
 </body>
 </html> 
